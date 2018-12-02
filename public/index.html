@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <title>Gotem</title>
+    <link rel="stylesheet" href="css/index.css">
+
+</head>
+
+<body>
+
+    <header>
+        <h1>Library</h1>
+
+        <div>
+            <input name="searchMemesByName" id="search-memes-by-name" type="search" placeholder="Search for Meme">
+        </div>
+    </header>
+
+    <main>
+        <aside id="tags-container" >
+            <h2>Tags</h2>
+            <hr>
+            <div class="tag">
+                Random
+            </div>
+            <div class="tag">
+                Funny
+            </div>
+            <div class="tag">
+                Happy
+            </div>
+        </aside>
+
+        <aside id="filters-container">
+            <h2>Sort By</h2>
+            <hr>
+        </aside>
+
+        <div class="grid">
+
+            <div class="grid-sizer"></div>
+            <div class="grid-item">
+                <div class="grid-item-overlay">
+                    <button>Delete</button>
+                    <button>Share</button>
+                    <button>Edit</button>
+                </div>
+                <img src="img/meme1.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme2.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme3.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme4.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme5.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme1.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme2.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme3.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme4.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme5.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme1.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme2.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme3.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme4.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <img src="img/meme5.jpg" alt="">
+            </div>
+
+        </div>
+
+
+    </main>
+
+    <footer>
+        <span id="profile-btn" class="floating-btn">P</span>
+        <span id="discover-btn" class="floating-btn">D</span>
+        <span id="create-btn" class="floating-btn">C</span>
+    </footer>
+
+    <script src="js/masonry.pkgd.min.js"></script>
+    <script>
+        // init Masonry
+        var grid = document.querySelector('.grid');
+
+        var msnry = new Masonry( grid, {
+            itemSelector: '.grid-item',
+            columnWidth: '.grid-sizer',
+            percentPosition: true,
+            gutter: 4,
+            horizontalOrder: true
+        });
+
+
+    </script>
+
+</body>
+
+</html>
