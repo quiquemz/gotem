@@ -91,9 +91,10 @@ input[type="search"] {
 .floating-btn {
     position: absolute;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     box-shadow: var(--main-grey) 1px 1px 10px;
+    padding: 8px;
 }
 
 .floating-btn:hover {
@@ -101,8 +102,13 @@ input[type="search"] {
     cursor: pointer;
 }
 
+.iconify {
+    color:white;
+    font-size: 24px;
+}
+
 .tag {
-    background: var(--main-yellow);
+    background: var(--main-blue);
     color: white;
     padding: 4px;
     margin: 8px 0;

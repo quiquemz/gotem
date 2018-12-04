@@ -19,7 +19,6 @@ body, h2, h3, h4 {
 header {
     text-align: center;
     font-family: "Slackey", cursive;
-    color: var(--main-blue);
     padding: 20px 0;
 }
 
