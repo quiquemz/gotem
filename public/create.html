@@ -11,30 +11,65 @@
 </head>
 <body>
 
-    <div class="wrapper">
-        <header>
-            <a href="index.html" class="hdr-btn">
-                <i class="iconify" data-icon="zmdi:close" data-inline="false"></i>
-            </a>
-            <h1>Create</h1>
-            <i class="iconify hdr-btn" data-icon="zmdi:share" data-inline="false"></i>
-        </header>
 
-        <main>
-            <aside>
+    <header>
+        <a href="index.html" class="hdr-btn">
+            <i class="iconify" data-icon="zmdi:close" data-inline="false"></i>
+        </a>
+        <h1>Create</h1>
+        <i class="iconify hdr-btn" data-icon="zmdi:share" data-inline="false"></i>
+    </header>
 
-            </aside>
+    <main>
 
-            <div class="card">
+        <aside>
+            <div class="aside-container">
+                <div class="options-header">
+                    <i class="iconify" data-icon="zmdi:share"></i>
+                    <h3>Top Text</h3>
+                </div>
 
+                <label for="top-text-input">Text</label>
+                <input id="top-text-input" type="text" placeholder="Add top text">
+
+                <label for="top-text-size">Size: <span>10</span></label>
+                <input id="top-text-size" type="range">
             </div>
 
-            <aside>
+            <div class="aside-container">
+                <div class="options-header">
+                    <i class="iconify" data-icon="zmdi:share"></i>
+                    <h3>Bottom Text</h3>
+                </div>
 
-            </aside>
+                <label for="bottom-text-input">Text</label>
+                <input id="bottom-text-input" type="text" placeholder="Add bottom text">
 
-        </main>
-    </div>
+                <label for="bottom-text-size">Size: <span>10</span></label>
+                <input id="bottom-text-size" type="range">
+            </div>
+        </aside>
+
+        <div>
+            <div class="card">
+                <img src="img/meme2.jpg" alt="">
+            </div>
+        </div>
+
+        <aside>
+            <div class="aside-container">
+                <div class="options-header">
+                    <i class="iconify" data-icon="zmdi:share"></i>
+                    <h3>Top Text</h3>
+                </div>
+            </div>
+
+            <button>Save Meme</button>
+        </aside>
+
+    </main>
+
+
 
 </body>
 </html>

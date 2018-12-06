@@ -38,7 +38,6 @@ form label {
 form button {
     border: 1px solid var(--main-blue);
     border-radius: 4px;
-    padding: 12px;
     width: 48%;
 }
 
@@ -53,5 +52,4 @@ form button:hover {
 form button:focus {
     color: white;
     background-color: var(--main-blue);
-    outline: none;
 }

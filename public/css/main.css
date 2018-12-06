@@ -31,24 +31,36 @@ header h1 {
     margin: 0 auto;
 }
 
+label {
+    font-size: 12px;
+    font-weight: bold;
+}
+
 input {
     width: 100%;
     box-shadow: none;
     border: none;
-    border-bottom: 1px solid var(--main-grey);
-    padding-top: 10px;
+    padding-top: 8px;
     font-size: 14px;
-    color: var(--main-blue);
+    background: transparent;
 }
 
 input:focus {
     outline: none;
-    border-bottom: 2px solid var(--main-blue);
 }
 
 hr {
     margin-top: 4px;
     border: var(--main-grey) solid 0.5px;
+}
+
+button {
+    padding: 12px;
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
 }
 
 .hdr-btn {

@@ -34,6 +34,15 @@ footer {
     height: 26px;
 }
 
+input {
+    border-bottom: 1px solid var(--main-grey);
+    color: var(--main-blue);
+}
+
+input:focus {
+    border-bottom: 2px solid var(--main-blue);
+}
+
 input[type="search"] {
     width: 244px;
 }

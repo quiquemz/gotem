@@ -3,29 +3,132 @@
 body {
     margin: 0;
     padding: 0;
+    background: var(--main-blue);
 }
 
 header {
     color: var(--main-white);
 }
 
-header i:nth-of-type(1) {
-    position: absolute;
-    left: 0;
-}
-
 main {
-    padding-top: 110px;
-    height: 100%;
+    display: flex;
+    padding: 110px 0 0;
+    height: calc(100vh - 110px);
+    width: 100%;
 }
 
-.wrapper {
-    height: 100vh;
+main > aside {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 4px 20px 40px;
+}
+
+main > div {
+    flex: 1;
+    display: flex;
+    margin: 0 0 40px;
+    background: var(--main-white);
+    border-radius: 4px;
+    padding: 10px;
+}
+
+label {
+    color: white;
+}
+
+input {
+    border-bottom: 2px solid var(--main-white);
+    color: var(--main-white);
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+input:focus {
+    border-bottom: 3px solid var(--main-white);
+}
+
+input::placeholder {
+    color: #AAA;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    background: var(--main-white);
+    height: 2px;
     width: 100%;
-    display: block;
-    background: var(--main-blue);
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+input[type="range"]:focus {
+    height: 3px;
+}
+
+input[type="range"]:hover {
+    height: 3px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--main-red);
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+input[type="range"]::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--main-red);
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+button {
+    font-size: 16px;
+    background-color: var(--main-yellow);
+    color: var(--main-white);
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    font-weight: bold;
 }
 
 .hdr-btn {
     color: white;
+}
+
+.card > img {
+    width: 100%;
+}
+
+.options-header {
+    display: flex;
+    background: white;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: 10px;
+    margin-bottom: 12px;
+}
+
+.options-header > h3 {
+    margin: 0 12px;
+    font-weight: bold;
+}
+
+.options-header > .iconify {
+    font-size: 20px;
+}
+
+.card {
+    margin: auto;
 }
