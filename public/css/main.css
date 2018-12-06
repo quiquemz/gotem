@@ -6,8 +6,9 @@
     --main-white: #FFF;
     --main-grey: #CBCBCB;
     --secondary-grey: #DFDFDF;
-    --right-left-padding: 12px;
+    --right-left-padding: 42px;
     --aside-width: 244px;
+    --header-height: 58px;
 }
 
 body, h2, h3, h4 {
@@ -19,7 +20,15 @@ body, h2, h3, h4 {
 header {
     text-align: center;
     font-family: "Slackey", cursive;
-    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    display: flex;
+    padding: 26px 0;
+    z-index: 1000;
+}
+
+header h1 {
+    margin: 0 auto;
 }
 
 input {
@@ -40,4 +49,10 @@ input:focus {
 hr {
     margin-top: 4px;
     border: var(--main-grey) solid 0.5px;
+}
+
+.hdr-btn {
+    font-size: 24px;
+    cursor: pointer;
+    margin: 12px var(--right-left-padding);
 }
