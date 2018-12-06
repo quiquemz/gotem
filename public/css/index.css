@@ -6,26 +6,16 @@ body {
 }
 
 header {
-    position: fixed;
-    width: 100%;
-    display: flex;
-    padding: 26px 0;
-    z-index: 1000;
     background-color: var(--main-white);
-}
-
-header h1 {
-    margin: 0 auto;
 }
 
 header div {
     position: absolute;
-    right: var(--right-left-padding);
-    margin-top: 8px;
+    right: 12px;
 }
 
 main {
-    padding-top: 94px;
+    padding-top: 110px;
 }
 
 main aside {
@@ -63,11 +53,10 @@ input[type="search"] {
 
 #filters-container {
     position: fixed;
-    top: 94px;
     right: 0;
     width: var(--aside-width);
     text-align: center;
-    margin: 0 var(--right-left-padding);
+    margin: 0 12px;
 }
 
 #profile-btn {
@@ -83,7 +72,7 @@ input[type="search"] {
 }
 
 #create-btn {
-    right: var(--right-left-padding);
+    right: 12px;
     bottom: 90px;
     background: var(--main-blue);
 }
