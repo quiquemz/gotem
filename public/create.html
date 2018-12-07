@@ -30,10 +30,10 @@
                 </div>
 
                 <label for="top-text-input">Text</label>
-                <input id="top-text-input" type="text" placeholder="Add top text">
+                <input id="top-text-input" type="text" value="Top Text" placeholder="Add top text">
 
-                <label for="top-text-size">Size: <span>10</span></label>
-                <input id="top-text-size" type="range" value="10" min="8" max="28">
+                <label for="top-text-size">Size: <span>40</span></label>
+                <input id="top-text-size" type="range" value="40" min="20" max="100">
             </div>
 
             <div class="aside-container">
@@ -43,18 +43,19 @@
                 </div>
 
                 <label for="bottom-text-input">Text</label>
-                <input id="bottom-text-input" type="text" placeholder="Add bottom text">
+                <input id="bottom-text-input" type="text" value="Bottom Text" placeholder="Add bottom text" value="10">
 
-                <label for="bottom-text-size">Size: <span>10</span></label>
-                <input id="bottom-text-size" type="range" value="10" min="8" max="28">
+                <label for="bottom-text-size">Size: <span>40</span></label>
+                <input id="bottom-text-size" type="range" value="40" min="20" max="100">
             </div>
         </aside>
 
         <div>
-            <div class="card">
-                <canvas>
+            <div id="meme-card">
+                <!--<canvas id="meme-canvas" width="10" height="10">
+                    Canvas is not supported by your browser, sorry!
                     <img src="img/meme1.jpg" alt="">
-                </canvas>
+                </canvas>-->
             </div>
         </div>
 
@@ -86,7 +87,8 @@
 
     </main>
 
-
+    <script src="js/canvasAddons.js"></script>
+    <script type="module" src="js/create.js"></script>
 
 </body>
 </html>

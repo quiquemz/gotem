@@ -58,6 +58,8 @@ form button:nth-of-type(2) {
 
 form button:hover {
     cursor: pointer;
+    background-color: var(--main-blue);
+    color: white;
 }
 
 form button:focus {
