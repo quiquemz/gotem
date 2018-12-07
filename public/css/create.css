@@ -165,17 +165,18 @@ button:focus {
     margin: 8px;
 }
 
-.card {
+#meme-card {
     margin: auto;
 }
 
-.card canvas {
+#meme-card img {
+    width: 100%;
+}
+
+#meme-card canvas {
     background: black;
 }
 
-.card canvas img {
-    width: 100%;
-}
 
 
 
