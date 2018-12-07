@@ -1,6 +1,7 @@
 .firebase/
 .idea/
 DS_STORE
+package-lock.json
 node_modules
 *.log
 .gitignore

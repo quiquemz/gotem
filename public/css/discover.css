@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import "main.css";
 
 body {
@@ -39,3 +40,34 @@ main {
     background: white;
 }
 
+=======
+
+.grid {
+    margin: 0 264px;
+}
+
+.grid-sizer, .grid-item { width: 32.8%; }
+
+.grid-item {
+    float: left;
+    margin-bottom: 5px;
+}
+
+.grid-item img {
+    display: block;
+    max-width: 100%;
+    min-width: 100%;
+}
+
+.grid-item-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(150,150,150,0.8);
+    opacity: 0;
+}
+
+.grid-item-overlay:hover {
+    opacity: 1;
+}
+>>>>>>> 71dedb34781438145d4c42974cf64ced9f863a05
