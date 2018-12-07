@@ -25,7 +25,7 @@
         <aside>
             <div class="aside-container">
                 <div class="options-header">
-                    <i class="iconify" data-icon="zmdi:share"></i>
+                    <i class="iconify" data-icon="mdi:message-text" data-inline="false"></i>
                     <h3>Top Text</h3>
                 </div>
 
@@ -33,12 +33,12 @@
                 <input id="top-text-input" type="text" placeholder="Add top text">
 
                 <label for="top-text-size">Size: <span>10</span></label>
-                <input id="top-text-size" type="range">
+                <input id="top-text-size" type="range" value="10" min="8" max="28">
             </div>
 
             <div class="aside-container">
                 <div class="options-header">
-                    <i class="iconify" data-icon="zmdi:share"></i>
+                    <i class="iconify" data-icon="mdi:message-text" data-inline="false"></i>
                     <h3>Bottom Text</h3>
                 </div>
 
@@ -46,21 +46,38 @@
                 <input id="bottom-text-input" type="text" placeholder="Add bottom text">
 
                 <label for="bottom-text-size">Size: <span>10</span></label>
-                <input id="bottom-text-size" type="range">
+                <input id="bottom-text-size" type="range" value="10" min="8" max="28">
             </div>
         </aside>
 
         <div>
             <div class="card">
-                <img src="img/meme2.jpg" alt="">
+                <canvas>
+                    <img src="img/meme1.jpg" alt="">
+                </canvas>
             </div>
         </div>
 
         <aside>
             <div class="aside-container">
                 <div class="options-header">
-                    <i class="iconify" data-icon="zmdi:share"></i>
-                    <h3>Top Text</h3>
+                    <i class="iconify" data-icon="mdi:file-image-box" data-inline="false"></i>
+                    <h3>Source Image</h3>
+                </div>
+
+                <div class="source-image-container">
+                    <div class="icon-text-box" tabindex="0">
+                        <div>URL</div>
+                        <i class="iconify" data-icon="mdi:earth" data-inline="false"></i>
+                    </div>
+                    <div class="icon-text-box" tabindex="0">
+                        <div>File</div>
+                        <i class="iconify" data-icon="mdi:upload" data-inline="false"></i>
+                    </div>
+                    <div class="icon-text-box" tabindex="0">
+                        <div>Camera</div>
+                        <i class="iconify" data-icon="mdi:camera" data-inline="false"></i>
+                    </div>
                 </div>
             </div>
 
