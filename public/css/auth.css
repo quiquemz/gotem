@@ -5,6 +5,8 @@ header {
     font-family: "Slackey", cursive;
     color: var(--main-blue);
     padding: 20px 0;
+    position: relative;
+    display: block;
 }
 
 header img {
