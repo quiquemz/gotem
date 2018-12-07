@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const img = document.createElement('img');
     const topText = document.getElementById('top-text-input');
     const topSizer = document.getElementById('top-text-size');
+    const urlInput = document.getElementById('url-input');
+    const fileInput = document.getElementById('file-input');
+    const saveMemeBtn = document.getElementById('save-meme-btn');
 
     // Input for user
     let topTextVal = topText.value.toUpperCase();
@@ -20,7 +23,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let bottomSizeVal = bottomSizer.value;
 
     function draw() {
+
         // Canvas Part
+        if(memeCard.hasChildNodes()) {
+            memeCard.removeChild(canvas);
+        }
+
         memeCard.appendChild(img);
 
         canvas.height = img.height;
@@ -64,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Draw image on top text input change
     topText.oninput = function() {
         topTextVal = topText.value.toUpperCase();
+
         draw();
     };
 
@@ -71,12 +80,14 @@ document.addEventListener('DOMContentLoaded', function() {
     topSizer.oninput = function() {
         topSizeVal = topSizer.value;
         topSizer.labels[0].childNodes[1].innerText = topSizeVal;
+
         draw();
     };
 
     // Draw image on bottom text input change
     bottomText.oninput = function() {
         bottomTextVal = bottomText.value.toUpperCase();
+
         draw();
     };
 
@@ -84,9 +95,37 @@ document.addEventListener('DOMContentLoaded', function() {
     bottomSizer.oninput = function() {
         bottomSizeVal = bottomSizer.value;
         bottomSizer.labels[0].childNodes[1].innerText = bottomSizeVal;
+
         draw();
     };
 
-    img.src = 'img/meme6.jpg'; // Set source path
+    // Draw image on url input change
+    urlInput.oninput = function() {
+        img.src = urlInput.value;
+    };
+
+    // Draw image on file upload
+    fileInput.onchange = function(e) {
+        const file = e.target.files[0];
+
+        if(!file)
+            return;
+
+        img.src = URL.createObjectURL(file);
+    };
+
+    // Draw image on window resize
+    window.onresize = function() {
+
+        draw();
+    };
+
+    saveMemeBtn.onclick = function () {
+        let downloadImg = canvas.toDataURL('image/jpg');
+
+    };
+
+    // Setting default image
+    img.src = 'img/meme6.jpg';
 
 });

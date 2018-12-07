@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="css/create.css">
     <link href="https://fonts.googleapis.com/css?family=Slackey" rel="stylesheet">
-    <script src="http://code.iconify.design/1/1.0.0-rc3/iconify.min.js"></script>
+    <script src="https://code.iconify.design/1/1.0.0-rc3/iconify.min.js"></script>
 
 </head>
 <body>
@@ -51,12 +51,7 @@
         </aside>
 
         <div>
-            <div id="meme-card">
-                <!--<canvas id="meme-canvas" width="10" height="10">
-                    Canvas is not supported by your browser, sorry!
-                    <img src="img/meme1.jpg" alt="">
-                </canvas>-->
-            </div>
+            <div id="meme-card"></div>
         </div>
 
         <aside>
@@ -66,23 +61,13 @@
                     <h3>Source Image</h3>
                 </div>
 
-                <div class="source-image-container">
-                    <div class="icon-text-box" tabindex="0">
-                        <div>URL</div>
-                        <i class="iconify" data-icon="mdi:earth" data-inline="false"></i>
-                    </div>
-                    <div class="icon-text-box" tabindex="0">
-                        <div>File</div>
-                        <i class="iconify" data-icon="mdi:upload" data-inline="false"></i>
-                    </div>
-                    <div class="icon-text-box" tabindex="0">
-                        <div>Camera</div>
-                        <i class="iconify" data-icon="mdi:camera" data-inline="false"></i>
-                    </div>
-                </div>
+                <label for="url-input">URL:</label>
+                <input id="url-input" type="url" placeholder="www.example.com">
+                
+                <input id="file-input" type="file" accept="image/*">
             </div>
 
-            <button>Save Meme</button>
+            <button id="save-meme-btn">Save Meme</button>
         </aside>
 
     </main>
