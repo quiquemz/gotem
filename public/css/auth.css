@@ -27,6 +27,14 @@ main {
     padding: 32px;
 }
 
+input {
+    border-bottom: var(--main-blue) 1px solid;
+}
+
+input:focus {
+    border-bottom: var(--main-blue) 2px solid;
+}
+
 form div {
     margin-top: 24px;
 }
@@ -38,6 +46,7 @@ form label {
 }
 
 form button {
+    background: var(--main-white);
     border: 1px solid var(--main-blue);
     border-radius: 4px;
     width: 48%;
