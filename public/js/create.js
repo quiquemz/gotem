@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    // Constants
+    const PAD = 10;
+
+    // HTML elements
     const memeCard = document.getElementById('meme-card');
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext("2d");
@@ -6,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const topText = document.getElementById('top-text-input');
     const topSizer = document.getElementById('top-text-size');
 
+    // Input for user
     let topTextVal = topText.value.toUpperCase();
     let topSizeVal = topSizer.value;
     let bottomText = document.getElementById('bottom-text-input');
@@ -34,8 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
 
-        ctx.drawBreakingText(topTextVal, canvas.width/2, 10, null, 1, 'fill');
-        ctx.drawBreakingText(topTextVal, canvas.width/2, 10, null, 1, 'stroke');
+        ctx.drawBreakingText(topTextVal, canvas.width/2, PAD, null, 1, 'fill');
+        ctx.drawBreakingText(topTextVal, canvas.width/2, PAD, null, 1, 'stroke');
 
         // Bottom Text Part
         ctx.fillStyle = '#FFF';
@@ -46,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
 
-        ctx.drawBreakingText(bottomTextVal, canvas.width/2, canvas.height-10, null, 1, 'fill');
-        ctx.drawBreakingText(bottomTextVal, canvas.width/2, canvas.height-10, null, 1, 'stroke');
+        ctx.drawBreakingText(bottomTextVal, canvas.width/2, canvas.height-PAD, null, 1, 'fill');
+        ctx.drawBreakingText(bottomTextVal, canvas.width/2, canvas.height-PAD, null, 1, 'stroke');
     }
 
     // Draw image on load
