@@ -112,6 +112,11 @@ button:focus {
     box-shadow: 0 0 8px 1px rgba(100, 100, 100, 0.8);
 }
 
+a {
+    color: var(--main-white);
+    text-decoration: none;
+}
+
 .hdr-btn {
     color: white;
 }

@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const urlInput = document.getElementById('url-input');
     const fileInput = document.getElementById('file-input');
     const saveMemeBtn = document.getElementById('save-meme-btn');
+    const downloadMemeAnchor = document.getElementById('download-btn');
 
     // Input for user
     let topTextVal = topText.value.toUpperCase();
@@ -116,10 +117,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Draw image on window resize
     window.onresize = function() {
-
         draw();
     };
 
+    // Download meme
+    downloadMemeAnchor.onclick = function() {
+        let downloadImg = canvas.toDataURL('image/jpg');
+        this.href = downloadImg;
+    };
+
+    // Save meme to library
     saveMemeBtn.onclick = function () {
         let downloadImg = canvas.toDataURL('image/jpg');
 
