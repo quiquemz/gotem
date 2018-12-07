@@ -110,7 +110,6 @@ button:hover {
 
 button:focus {
     box-shadow: 0 0 8px 1px rgba(100, 100, 100, 0.8);
-    transform: scale(1.02);
 }
 
 .hdr-btn {
@@ -133,36 +132,6 @@ button:focus {
 
 .options-header > .iconify {
     font-size: 22px;
-}
-
-.source-image-container {
-    display: flex;
-    justify-content: space-evenly;
-    color: var(--main-white);
-}
-
-.source-image-container .icon-text-box {
-    text-align: center;
-    cursor: pointer;
-}
-
-.source-image-container .icon-text-box:hover {
-    transform: scale(1.08);
-}
-
-.source-image-container .icon-text-box:focus {
-    outline: none;
-    transform: scale(1.08);
-}
-
-.source-image-container .icon-text-box div {
-    font-size: 12px;
-    text-decoration: underline;
-}
-
-.source-image-container .icon-text-box .iconify {
-    font-size: 32px;
-    margin: 8px;
 }
 
 #meme-card {
