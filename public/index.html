@@ -12,16 +12,39 @@
     <!--Imports End-->
 
     <!--Firebase Start-->
-    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-storage.js"></script>
     <script src="/js/firebase.js"></script>
-    <!--Firebase End-->
 
-    <!--Javascript Start-->
-    <script src="/js/library.js"></script>
-    <!--Javascript End-->
+    <!--Firebase End-->
+    <script src="/js/index.js"></script>
+    <script>
+      let uid = null;
+      let email = null;
+      let anonymous = null;
+      let user = null;
+      let displayname = null;
+      firebase.auth().onAuthStateChanged(function(x) {
+        if (x) {
+          uid = x.uid;
+          displayname = x.displayName;
+          email = x.email;
+          anonymous = x.anonymous;
+          user = x;
+          console.log(x.toJSON());
+          const db = firebase.firestore();
+          // Initialize Cloud Firestore through Firebase
+          // Disable deprecated features
+          db.settings({
+            timestampsInSnapshots: true
+          });
+          const us = firebase.storage();
+          populate_DOM(db, us);
+        }
+      });
+    </script>
 
   </head>
 
@@ -99,9 +122,9 @@
         gutter: 4,
         horizontalOrder: true
       });
-
-
     </script>
+    <!--Javascript Start-->
+    <!--Javascript End-->
 
   </body>
 

@@ -45,7 +45,7 @@ form label {
     font-weight: bold;
 }
 
-form button {
+form button{
     background: var(--main-white);
     border: 1px solid var(--main-blue);
     border-radius: 4px;
@@ -56,13 +56,13 @@ form button:nth-of-type(2) {
     float: right;
 }
 
-form button:hover {
+form button:active {
     cursor: pointer;
     background-color: var(--main-blue);
     color: white;
 }
 
-form button:focus {
+form button:active {
     color: white;
     background-color: var(--main-blue);
 }
