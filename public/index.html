@@ -2,96 +2,123 @@
 
 <html lang="en">
 
-  <head>
+<head>
 
     <title>Gotem</title>
 
     <!--Imports Start-->
     <link href="https://fonts.googleapis.com/css?family=Slackey" rel="stylesheet">
     <script src="http://code.iconify.design/1/1.0.0-rc3/iconify.min.js"></script>
-    <!--Imports End-->
 
     <!--Firebase Start-->
     <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-storage.js"></script>
-    <!--Firebase End-->
 
     <!--StyleSheet Start-->
     <link rel="stylesheet" href="css/index.css">
-    <!--StyleSheet End-->
 
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <header>
-      <h1>Library</h1>
-    </header>
+<header>
+    <h1>Library</h1>
+</header>
 
-    <main>
+<main>
     <aside id="tags-container" >
-      <h2>Tags</h2>
-      <hr>
-      <!--Tags go here-->
+        <h2>Tags</h2>
+        <hr>
+        <!--Tags go here-->
     </aside>
 
     <aside id="filters-container">
-      <h2>Sort By</h2>
-      <hr>
-      <input id="date-radio" type="radio" title="Date" name="sort">Date
-      <input id="name-radio" type="radio" title="radio" name="sort">Name
+        <h2>Sort By</h2>
+        <hr>
+        <input id="date-radio" type="radio" title="Date" name="sort">Date
+        <input id="name-radio" type="radio" title="radio" name="sort">Name
     </aside>
 
     <div class="grid">
-      <div class="grid-sizer"></div>
-      <!--Memes go here-->
+        <div class="grid-sizer"></div>
+        <div class="grid-item">
+            <div class="grid-item-overlay">
+                <button onclick="deleteImg(this);">Delete</button>
+                <button>Share</button>
+                <button onclick="editImg(this);">Edit</button>
+            </div>
+            <img class="grid-item-image" src="img/meme1.jpg" alt="">
+            <span class="time" hidden>9</span>
+            <span class="name" hidden>c</span>
+        </div>
+        <div class="grid-item">
+            <div class="grid-item-overlay">
+                <button onclick="deleteImg(this);">Delete</button>
+                <button>Share</button>
+                <button onclick="editImg(this);">Edit</button>
+            </div>
+            <img class="grid-item-image" src="img/meme2.jpg" alt="">
+            <span class="time" hidden>32</span>
+            <span class="name" hidden>bd</span>
+        </div>
+        <div class="grid-item">
+            <div class="grid-item-overlay">
+                <button onclick="deleteImg(this);">Delete</button>
+                <button>Share</button>
+                <button onclick="editImg(this);">Edit</button>
+            </div>
+            <img class="grid-item-image" src="img/meme4.jpg" alt="">
+            <span class="time" hidden>3</span>
+            <span class="name" hidden>aa</span>
+        </div>
+        <div class="grid-item">
+            <div class="grid-item-overlay">
+                <button onclick="deleteImg(this);">Delete</button>
+                <button>Share</button>
+                <button onclick="editImg(this);">Edit</button>
+            </div>
+            <img class="grid-item-image" src="img/meme6.jpg" alt="">
+            <span class="time" hidden>1</span>
+            <span class="name" hidden>b</span>
+        </div>
+        <div class="grid-item">
+            <div class="grid-item-overlay">
+                <button onclick="deleteImg(this);">Delete</button>
+                <button>Share</button>
+                <button onclick="editImg(this);">Edit</button>
+            </div>
+            <img class="grid-item-image" src="img/meme5.jpg" alt="">
+            <span class="time" hidden>2</span>
+            <span class="name" hidden>b</span>
+        </div>
     </div>
 
-    </main>
+</main>
 
-    <footer>
-      <a id="profile-btn" class="floating-btn" href="profile.html">
+<footer>
+    <a id="profile-btn" class="floating-btn" href="profile.html">
         <i class="iconify" data-icon="mdi:account"></i>
-      </a>
-      <a id="discover-btn" class="floating-btn" href="#">
+    </a>
+    <a id="discover-btn" class="floating-btn" href="#">
         <i class="iconify" data-icon="mdi:eye"></i>
-      </a>
-      <a id="create-btn" class="floating-btn" href="create.html">
+    </a>
+    <a id="create-btn" class="floating-btn" onclick="goToCreate();">
         <i class="iconify" data-icon="mdi:pencil"></i>
-      </a>
-    </footer>
+    </a>
+</footer>
 
-    <!--Javascript Start-->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
-    <script src="js/istope.pkgd.min.js"></script>
-    <script src="js/firebase.js"></script>
-    <script src="js/index.js"></script>
-    <!--Javascript End-->
 
-  </body>
+<!--Javascript Start-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="js/istope.pkgd.min.js"></script>
+<script src="js/initFirebase.js"></script>
+<script src="js/index.js"></script>
 
-  <div id="templates">
-    <template id="grid-item-template">
-      <div class="grid-item">
-        <div class="grid-item-overlay">
-          <button onclick="deleteImg(this);">Delete</button>
-          <button>Share</button>
-          <button onclick="editImg(this);">Edit</button>
-        </div>
-        <img class="grid-item-image" src="img/default.jpg" alt="">
-        <span class="time" hidden>1</span>
-        <span class="name" hidden>b</span>
-      </div>
-    </template>
-    <template id="tag-template">
-      <div class="tag">
-        Random
-      </div>
-    </template>
-  </div>
 
+</body>
 </html>

@@ -1,4 +1,33 @@
+function dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = unescape(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], {type:mimeString});
+}
+
+function cleanString(text) {
+    return text.replace(/[.#$[\]]/g, '');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+
+    /*** Firebase ***/
+    const auth = firebase.auth();
+    const db = firebase.database();
+    const storage = firebase.storage();
 
     /*** Constants ***/
     const PAD = 10;
@@ -30,7 +59,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /*** Function definitions ***/
     function initializeHTML(currentImgObj) {
-        img.src = currentImgObj.original;
+        console.log(currentImgObj);
+        if(currentImgObj.original.startsWith('gs://')) {
+            storage.refFromURL(currentImgObj.original).getDownloadURL().then(function(url){
+                img.src = url;
+            }).catch(function(err) {
+                alert('Image could not be loaded. Loading different one instead.');
+                img.src = 'https://imgflip.com/s/meme/The-Most-Interesting-Man-In-The-World.jpg';
+
+            });
+        } else if(currentImgObj.original.startsWith('https://firebasestorage.googleapis.com')) {
+            img.src = currentImgObj.original;
+
+        } else {
+            alert('Image could not be loaded. Loading different one instead.');
+            img.src = 'https://imgflip.com/s/meme/The-Most-Interesting-Man-In-The-World.jpg';
+
+        }
 
         topText.value = topTextVal = currentImgObj.topText;
         topSizer.value = topSizeVal = currentImgObj.topSize;
@@ -51,6 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if(memeCard.hasChildNodes()) {
             try{
                 memeCard.removeChild(canvas);
+                delete(canvas);
+                canvas = document.createElement('canvas');
             } catch (e) {
                 console.warn(e);
             }
@@ -177,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /*** Initializing app ***/
-    if(localStorage.getItem('currentImg')) {
+    if(localStorage.getItem('currentImg') && localStorage.getItem('currentImg').time) {
         initializeHTML(JSON.parse(localStorage.getItem('currentImg')));
     } else {
         initializeHTML({
@@ -193,6 +240,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /*** Event Handlers ***/
+    auth.onAuthStateChanged(function(user) {
+        if(!user) {
+            window.location.assign('auth.html');
+        } else {
+            console.log('Logged in?');
+        }
+    });
+
     // Draw image on load
     img.onload = function() {
         drawMemeOnCanvas();
@@ -232,13 +287,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Draw image on url input change
     urlInput.oninput = function() {
         img.src = urlInput.value;
-        img.crossOrigin = 'Anonymous';
         fileInput.value = '';
     };
 
     // Draw image on file upload
     fileInput.onchange = function(e) {
-        img.crossOrigin = null;
         const file = e.target.files[0];
 
         if(!file) return;
@@ -271,13 +324,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Download meme
     downloadMemeAnchor.onclick = function() {
+        updateLocalStorage();
         let flattenedLocalImgUrl = '';
 
         try {
             flattenedLocalImgUrl = canvas.toDataURL('image/png');
         } catch (e) {
-            alert('Image cannot be downloaded');
-            return;
+            alert('Cannot download');
         }
 
         // TODO create downloadable link
@@ -287,12 +340,54 @@ document.addEventListener('DOMContentLoaded', function() {
     // Save meme to library
     saveToLibraryBtn.onclick = function() {
         let flattenedLocalImgUrl = '';
+        let storageOriginaUrl = '';
+        let storageEditedUrl = '';
+        let currentImg = localStorage.getItem('currentImg');
+        let storageRef = storage.ref();
+        let storageOriginalRef = '';
+        let storageEditedRef = '';
 
         try {
             flattenedLocalImgUrl = canvas.toDataURL('image/png');
         } catch (e) {
-            alert('Image cannot be saved');
+            alert('Cannot save to library');
+            return;
         }
+
+        if(currentImg) {
+            currentImg = JSON.parse(currentImg);
+            storageOriginaUrl = currentImg.original;
+            storageEditedUrl = currentImg.edited;
+        } else {
+            storageOriginaUrl = topTextVal + topSizeVal + bottomTextVal + bottomSizeVal;
+            storageEditedUrl = 'edited_' + storageOriginaUrl;
+        }
+
+        storageOriginalRef = storageRef.child(`images/${storageOriginaUrl}`);
+        storageEditedRef = storageRef.child(`images/${storageEditedUrl}`);
+
+        /* For original */
+        if(img.src.startsWith('http')) {
+            storageOriginalRef.set(img.src);
+        } else {
+            console.log(img.src);
+        }
+
+        /* for edited */
+        canvas.toBlob(function(blob) {
+            storageEditedRef.put(blob).then(function(snapshot) {
+                db.ref(`users/${auth.currentUser.uid}/memes/${cleanString(currentImg.original)}`).set({
+                    time: Date.now(),
+                    original: currentImg.original,
+                    edited: currentImg.edited,
+                    topText: currentImg.topText,
+                    topSize: currentImg.topSize,
+                    bottomText: currentImg.bottomText,
+                    bottomSize: currentImg.bottomSize,
+                    tags: currentImg.tags
+                })
+            })
+        });
 
         /*
         * TODO Save to DB:
