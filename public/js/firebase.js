@@ -4,7 +4,7 @@
     authDomain: "gotem-memes-243ad.firebaseapp.com",
     databaseURL: "https://gotem-memes-243ad.firebaseio.com",
     projectId: "gotem-memes-243ad",
-    storageBucket: "gotem-memes-243ad.appspot.com",
+    storageBucket: "gs://gotem-memes-243ad.appspot.com/",
     messagingSenderId: "865423099288"
   };
   firebase.initializeApp(config);
