@@ -110,7 +110,11 @@ button:hover {
 
 button:focus {
     box-shadow: 0 0 8px 1px rgba(100, 100, 100, 0.8);
-    transform: scale(1.02);
+}
+
+a {
+    color: var(--main-white);
+    text-decoration: none;
 }
 
 .hdr-btn {
@@ -135,36 +139,6 @@ button:focus {
     font-size: 22px;
 }
 
-.source-image-container {
-    display: flex;
-    justify-content: space-evenly;
-    color: var(--main-white);
-}
-
-.source-image-container .icon-text-box {
-    text-align: center;
-    cursor: pointer;
-}
-
-.source-image-container .icon-text-box:hover {
-    transform: scale(1.08);
-}
-
-.source-image-container .icon-text-box:focus {
-    outline: none;
-    transform: scale(1.08);
-}
-
-.source-image-container .icon-text-box div {
-    font-size: 12px;
-    text-decoration: underline;
-}
-
-.source-image-container .icon-text-box .iconify {
-    font-size: 32px;
-    margin: 8px;
-}
-
 #meme-card {
     margin: auto;
 }
@@ -175,6 +149,33 @@ button:focus {
 
 #meme-card canvas {
     background: black;
+}
+
+#tag-input-container {
+    display: flex;
+}
+
+#tag-input-container > input {
+    margin-bottom: 0;
+    margin-right: 8px;
+}
+
+#tag-input-container > button {
+    padding: 0 10px;
+    font-size: 12px;
+}
+
+#tags-container {
+    margin-top: 4px;
+}
+
+.tag {
+    background-color: var(--main-white);
+    color: var(--main-blue);
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin: 4px 4px;
+    font-size: 12px;
 }
 
 

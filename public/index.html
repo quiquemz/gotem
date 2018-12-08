@@ -19,33 +19,6 @@
     <script src="/js/firebase.js"></script>
 
     <!--Firebase End-->
-    <script src="/js/index.js"></script>
-    <script>
-      let uid = null;
-      let email = null;
-      let anonymous = null;
-      let user = null;
-      let displayname = null;
-      firebase.auth().onAuthStateChanged(function(x) {
-        if (x) {
-          uid = x.uid;
-          displayname = x.displayName;
-          email = x.email;
-          anonymous = x.anonymous;
-          user = x;
-          console.log(x.toJSON());
-          const db = firebase.firestore();
-          // Initialize Cloud Firestore through Firebase
-          // Disable deprecated features
-          db.settings({
-            timestampsInSnapshots: true
-          });
-          const us = firebase.storage();
-          populate_DOM(db, us);
-        }
-      });
-    </script>
-
   </head>
 
   <body>
@@ -82,6 +55,11 @@
       <div class="grid-sizer"></div>
     </div>
 
+    <div class="grid">
+      <div class="grid-sizer"></div>
+
+    </div>
+
     </main>
 
     <footer>
@@ -101,7 +79,7 @@
       <template id="grid-item-template">
         <div class="grid-item">
           <div class="grid-item-overlay">
-            <button>Delete</button>
+            <button onclick="deleteImg(this);">Delete</button>
             <button>Share</button>
             <button>Edit</button>
           </div>
@@ -110,6 +88,7 @@
       </template>
     </div>
 
+    <!--Javascript Start-->
     <script src="js/masonry.pkgd.min.js"></script>
     <script>
       // init Masonry
@@ -123,7 +102,27 @@
         horizontalOrder: true
       });
     </script>
-    <!--Javascript Start-->
+    <script src="js/index.js"></script>
+    <script>
+      firebase.auth().onAuthStateChanged(function(x) {
+        if (x) {
+          uid = x.uid;
+          displayname = x.displayName;
+          email = x.email;
+          anonymous = x.anonymous;
+          user = x;
+          console.log(x.toJSON());
+          const db = firebase.firestore();
+          // Initialize Cloud Firestore through Firebase
+          // Disable deprecated features
+          db.settings({
+            timestampsInSnapshots: true
+          });
+          const us = firebase.storage();
+          populate_DOM(db, us);
+        }
+      });
+    </script>
     <!--Javascript End-->
 
   </body>

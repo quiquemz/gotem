@@ -1,5 +1,6 @@
 {
   "projects": {
-    "dev": "gotem-memes-243ad"
+    "dev": "gotem-memes-243ad",
+    "stagin": "gotem-memes-243ad"
   }
 }
