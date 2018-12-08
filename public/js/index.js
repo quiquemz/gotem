@@ -9,7 +9,7 @@ const deleteImg = function(e) {
         // While response from db, show loading overlay?
 
         // if successful delete from db
-        $grid.masonry('remove', container).masonry();
+        $grid.masonry('remove', container).masonry('layout');
 
         // if NOT successful
         // alert('Could not delete ');
