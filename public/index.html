@@ -16,9 +16,8 @@
     <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-storage.js"></script>
-    <script src="/js/firebase.js"></script>
-
     <!--Firebase End-->
+
   </head>
 
   <body>
@@ -89,6 +88,7 @@
     </div>
 
     <!--Javascript Start-->
+    <script src="/js/firebase.js"></script>
     <script src="js/masonry.pkgd.min.js"></script>
     <script>
       // init Masonry
@@ -102,16 +102,16 @@
         horizontalOrder: true
       });
     </script>
-    <script src="js/index.js"></script>
+    <script src="/js/index.js"></script>
     <script>
-      firebase.auth().onAuthStateChanged(function(x) {
-        if (x) {
-          uid = x.uid;
-          displayname = x.displayName;
-          email = x.email;
-          anonymous = x.anonymous;
-          user = x;
-          console.log(x.toJSON());
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          uid = user.uid;
+          displayname = user.displayName;
+          email = user.email;
+          anonymous = user.anonymous;
+          user = user;
+          console.log(user.toJSON());
           const db = firebase.firestore();
           // Initialize Cloud Firestore through Firebase
           // Disable deprecated features
@@ -119,7 +119,9 @@
             timestampsInSnapshots: true
           });
           const us = firebase.storage();
-          populate_DOM(db, us);
+          populate_DOM(user, db, us);
+        }else{
+          window.location.assign('/auth.html');
         }
       });
     </script>
