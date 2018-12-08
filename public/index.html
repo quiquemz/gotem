@@ -90,41 +90,7 @@
     <!--Javascript Start-->
     <script src="/js/firebase.js"></script>
     <script src="js/masonry.pkgd.min.js"></script>
-    <script>
-      // init Masonry
-      var grid = document.querySelector('.grid');
-
-      var msnry = new Masonry( grid, {
-        itemSelector: '.grid-item',
-        columnWidth: '.grid-sizer',
-        percentPosition: true,
-        gutter: 4,
-        horizontalOrder: true
-      });
-    </script>
     <script src="/js/index.js"></script>
-    <script>
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          uid = user.uid;
-          displayname = user.displayName;
-          email = user.email;
-          anonymous = user.anonymous;
-          user = user;
-          console.log(user.toJSON());
-          const db = firebase.firestore();
-          // Initialize Cloud Firestore through Firebase
-          // Disable deprecated features
-          db.settings({
-            timestampsInSnapshots: true
-          });
-          const us = firebase.storage();
-          populate_DOM(user, db, us);
-        }else{
-          window.location.assign('/auth.html');
-        }
-      });
-    </script>
     <!--Javascript End-->
 
   </body>

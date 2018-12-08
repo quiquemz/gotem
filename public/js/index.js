@@ -1,3 +1,19 @@
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    console.log(user.toJSON());
+    const us = firebase.storage();
+    const db = firebase.firestore();
+    // Initialize Cloud Firestore through Firebase
+    // Disable deprecated features
+    db.settings({
+      timestampsInSnapshots: true
+    });
+    populate_DOM(user, db, us);
+  }else{
+    window.location.assign('/auth.html');
+  }
+});
+
 function populate_DOM(user, db, us)
 {
   //get the templates
@@ -76,30 +92,30 @@ function populate_DOM(user, db, us)
 let msnry = null;
 
 const deleteImg = function(e) {
-    const container = e.parentElement.parentElement;
+  const container = e.parentElement.parentElement;
 
-    if(msnry) {
-        container.parentElement.removeChild(container);
-        msnry.layout();
-    }
+  if(msnry) {
+    container.parentElement.removeChild(container);
+    msnry.layout();
+  }
 };
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    /*** Masonry ***/
-    const grid = document.querySelector('.grid');
-    msnry = new Masonry(grid, {
-        itemSelector: '.grid-item',
-        columnWidth: '.grid-sizer',
-        percentPosition: true,
-        gutter: 4,
-        horizontalOrder: true
-    });
+  /*** Masonry ***/
+  const grid = document.querySelector('.grid');
+  msnry = new Masonry(grid, {
+    itemSelector: '.grid-item',
+    columnWidth: '.grid-sizer',
+    percentPosition: true,
+    gutter: 4,
+    horizontalOrder: true
+  });
 
-    /*** Firebase ***/
+  /*** Firebase ***/
 
 
-    /*** Library stuff ***/
+  /*** Library stuff ***/
 
 
 });
