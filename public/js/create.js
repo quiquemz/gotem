@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const copyLinkAnchor = document.getElementById('copy-link-btn');
     const saveToLibraryBtn = document.getElementById('save-to-library-btn');
     const addTagBtn = document.getElementById('add-tag-btn');
+    const tagsContainer = document.getElementById('tags-container');
+    const tagInput = document.getElementById('tag-input');
 
     /*** Input for user ***/
     let topTextVal = topText.value.toUpperCase();
@@ -24,9 +26,28 @@ document.addEventListener('DOMContentLoaded', function() {
     let bottomSizer = document.getElementById('bottom-text-size');
     let bottomTextVal = bottomText.value.toUpperCase();
     let bottomSizeVal = bottomSizer.value;
+    let tagInputVal = tagInput.value.toLowerCase();
 
     /*** Function definitions ***/
-    function draw() {
+    function initializeHTML(currentImgObj) {
+        img.src = currentImgObj.original;
+
+        topText.value = topTextVal = currentImgObj.topText;
+        topSizer.value = topSizeVal = currentImgObj.topSize;
+        bottomText.value = bottomTextVal = currentImgObj.bottomText;
+        bottomSizer.value = bottomSizeVal = currentImgObj.bottomSize;
+
+        topSizer.labels[0].childNodes[1].innerText = topSizeVal;
+        bottomSizer.labels[0].childNodes[1].innerText = bottomSizeVal;
+
+        currentImgObj.tags.forEach(function(tag) {
+            createTagElmt(tag);
+        });
+
+        drawMemeOnCanvas();
+    }
+
+    function drawMemeOnCanvas() {
 
         // Canvas Part
         if(memeCard.hasChildNodes()) {
@@ -52,8 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
 
-        ctx.drawBreakingText(topTextVal, canvas.width/2, PAD, null, 1, 'fill');
-        ctx.drawBreakingText(topTextVal, canvas.width/2, PAD, null, 1, 'stroke');
+        ctx.drawBreakingText(topTextVal.toUpperCase(), canvas.width/2, PAD, null, 1, 'fill');
+        ctx.drawBreakingText(topTextVal.toUpperCase(), canvas.width/2, PAD, null, 1, 'stroke');
 
         // Bottom Text Part
         ctx.fillStyle = '#FFF';
@@ -62,10 +83,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         ctx.font = bottomSizeVal + 'px ' + 'Impact';
         ctx.textAlign = 'center';
-        ctx.textBaseline = 'bottom';
+        ctx.textBaseline = 'top';
 
-        ctx.drawBreakingText(bottomTextVal, canvas.width/2, canvas.height-PAD, null, 1, 'fill');
-        ctx.drawBreakingText(bottomTextVal, canvas.width/2, canvas.height-PAD, null, 1, 'stroke');
+        let tempHeight = ctx.drawBreakingText(bottomTextVal.toUpperCase(), 0, 0, null, 1, 'none').textHeight;
+
+        ctx.drawBreakingText(bottomTextVal.toUpperCase(), canvas.width/2, canvas.height-tempHeight-PAD, null, 1, 'fill');
+        ctx.drawBreakingText(bottomTextVal.toUpperCase(), canvas.width/2, canvas.height-tempHeight-PAD, null, 1, 'stroke');
     }
 
     function fallbackCopyTextToClipboard(text) {
@@ -93,47 +116,102 @@ document.addEventListener('DOMContentLoaded', function() {
             fallbackCopyTextToClipboard(text);
             return;
         }
-        navigator.clipboard.writeText(text).then(function() {
-            alert('Copied link to clipboard.\nPaste to share.');
-        }, function(err) {
-            console.error('Async: Could not copy text: ', err);
-        });
+
+        navigator.clipboard.writeText(text)
+            .then(function() {
+                alert('Copied link to clipboard.\nPaste to share.');
+            }).catch(function(err) {
+                console.error('Async: Could not copy text: ', err);
+            });
+    }
+
+    function createTagElmt(text) {
+        const tagEl = `<span class="tag">${text}</span>`;
+
+        if(!text)
+            return;
+
+        if(Array.from(tagsContainer.children).map((e) => e.innerText).includes(text)) {
+            alert("Tag already included");
+            return;
+        }
+
+        tagsContainer.insertAdjacentHTML('beforeend', tagEl);
+
+        // TODO add tag to DB, or properties of Meme
+        // NOTE: Make sure to add only if doens't exist
+    }
+
+    /*** Initializing app ***/
+    if(localStorage.getItem('currentImg')) {
+        initializeHTML(JSON.parse(localStorage.getItem('currentImg')));
+    } else {
+        const imgObj = {
+            time: Date.now(),
+            original: 'https://imgflip.com/s/meme/The-Most-Interesting-Man-In-The-World.jpg',
+            edited: '',
+            topText: 'Top Text',
+            topSize: 40,
+            bottomText: 'Bottom Tet',
+            bottomSize: 40,
+            tags: []
+        };
+
+        initializeHTML(imgObj);
     }
 
     /*** Event Handlers ***/
     // Draw image on load
     img.onload = function() {
-        draw();
+        drawMemeOnCanvas();
     };
 
     // Draw image on top text input change
     topText.oninput = function() {
         topTextVal = topText.value.toUpperCase();
+        drawMemeOnCanvas();
+    };
 
-        draw();
+    topText.onchange = function() {
+        topTextVal = topText.value.toUpperCase();
+        drawMemeOnCanvas();
     };
 
     // Draw image on top text input change
     topSizer.oninput = function() {
         topSizeVal = topSizer.value;
         topSizer.labels[0].childNodes[1].innerText = topSizeVal;
+        drawMemeOnCanvas();
+    };
 
-        draw();
+    topSizer.onchange = function() {
+        topSizeVal = topSizer.value;
+        topSizer.labels[0].childNodes[1].innerText = topSizeVal;
+        drawMemeOnCanvas();
     };
 
     // Draw image on bottom text input change
     bottomText.oninput = function() {
         bottomTextVal = bottomText.value.toUpperCase();
+        drawMemeOnCanvas();
+    };
 
-        draw();
+    bottomText.onchange = function() {
+        bottomTextVal = bottomText.value.toUpperCase();
+        drawMemeOnCanvas();
     };
 
     // Draw image on bottom text input change
     bottomSizer.oninput = function() {
         bottomSizeVal = bottomSizer.value;
         bottomSizer.labels[0].childNodes[1].innerText = bottomSizeVal;
+        drawMemeOnCanvas();
+    };
 
-        draw();
+    bottomSizer.onchange = function() {
+        bottomSizeVal = bottomSizer.value;
+        bottomSizer.labels[0].childNodes[1].innerText = bottomSizeVal;
+        drawMemeOnCanvas();
     };
 
     // Draw image on url input change
@@ -153,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Draw image on window resize
     window.onresize = function() {
-        draw();
+        drawMemeOnCanvas();
     };
 
     // Copy meme link to clipboard
@@ -161,20 +239,21 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
 
         let flattenImgLocalUrl = canvas.toDataURL('image/jpg');
-
         // TODO Copy public link, NOT local
         copyTextToClipboard(flattenImgLocalUrl);
     };
 
     // Download meme
     downloadMemeAnchor.onclick = function() {
-        let flattenImg = canvas.toDataURL('image/jpg');
-        this.href = flattenImg;
+        const flattenLocalUrl = canvas.toDataURL('image/jpg');
+
+        // TODO create downloadable link
+        this.href = flattenLocalUrl;
     };
 
     // Save meme to library
     saveToLibraryBtn.onclick = function() {
-        let flattenImg = canvas.toDataURL('image/jpg');
+        const flattenLocalUrl = canvas.toDataURL('image/jpg');
 
         /*
         * TODO Save to DB:
@@ -189,28 +268,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add tag
     addTagBtn.onclick = function() {
-        const tagsContainer = document.getElementById('tags-container');
-        const tagInput = document.getElementById('tag-input');
-        let tagInputVal = tagInput.value.toLowerCase();
-        const tagEl = `<span class="tag">${tagInputVal}</span>`;
-
-        if(!tagInputVal)
-            return;
-
-        if(Array.from(tagsContainer.children).map((e) => e.innerText).includes(tagInputVal)) {
-            alert("Tag already included");
-            return;
-        }
-
-        tagsContainer.insertAdjacentHTML('beforeend', tagEl);
+        createTagElmt(tagInput.value);
         tagInput.value = '';
-
-
-        // TODO add tag to DB, or properties of Meme
     };
 
-    /*** Initializing state of app ***/
-    // Setting default image
-    img.src = 'img/meme6.jpg';
-    img.crossOrigin = 'anonymus';
 });
