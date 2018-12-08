@@ -1,53 +1,167 @@
 let $grid = null;
 
 const deleteImg = function(e) {
-    const container = e.parentElement.parentElement;
+  const container = e.parentElement.parentElement;
 
-    if($grid) {
-        // TODO try to delete from db
+  if($grid) {
+    // TODO try to delete from db
 
-        // While response from db, show loading overlay?
+    // While response from db, show loading overlay?
 
-        // if successful delete from db
-        $grid.masonry('remove', container).masonry();
+    // if successful delete from db
+    $grid.masonry('remove', container).masonry('layout');
 
-        // if NOT successful
-        // alert('Could not delete ');
-    }
+    // if NOT successful
+    // alert('Could not delete ');
+  }
 };
 
 const editImg = function(e) {
-    const container = e.parentElement.parentElement;
-    const img = container.getElementsByTagName("img")[0];
-    const imgObj = {
-        time: img.time || Date.now(),
-        original: img.original || 'https://imgflip.com/s/meme/The-Most-Interesting-Man-In-The-World.jpg',
-        edited: img.edited || '',
-        topText: img.topText || 'Top Text',
-        topSize: img.topSize || 40,
-        bottomText: img.bottomText || 'Bottom Tet',
-        bottomSize: img.bottomSize || 40,
-        tags: img.tags || []
-    };
+  const container = e.parentElement.parentElement;
+  const img = container.getElementsByTagName("img")[0];
+  console.log('editing image:');
+  console.log(img);
+  const imgObj = {
+    time: img.time,
+    original: img.original, 
+    edited: img.edited, 
+    topText: img.topText, 
+    topSize: img.topSize, 
+    bottomText: img.bottomText, 
+    bottomSize: img.bottomSize, 
+    tags: img.tags
+  };
 
-    localStorage.setItem('currentImg', JSON.stringify(imgObj));
-    window.location.assign('/create.html');
+  console.log(imgObj);
+  localStorage.setItem('currentImg', JSON.stringify(imgObj));
+  window.location.assign('/create.html');
 };
 
-document.addEventListener('DOMContentLoaded', function() {
+function addMemeToMasonry(storage, isEdited, memeData){
+  const grid_item_template = document.querySelector('#grid-item-template');
 
-    /*** Masonry ***/
-    $grid = $('.grid').masonry({
-        itemSelector: '.grid-item',
-        columnWidth: '.grid-sizer',
-        percentPosition: true,
-        gutter: 4,
-        horizontalOrder: true
+  let memePath = memeData.original;
+  if(isEdited){
+    memePath = memeData.edited; 
+  }
+  //get the meme's storage path
+  console.log(memePath);
+  const path = 'images/'+memePath.id;
+  console.log(path);
+
+  //get a reference to it in storage
+  const gsReference = storage.ref(path);
+
+  gsReference.getDownloadURL().then(function(url){
+    //strip out the movie-item element from the template
+    const grid_item = document.importNode(grid_item_template.content, true);
+
+    //create the <img>
+    const img = grid_item.querySelector('.grid-item-image')
+
+    img.src = url;
+    img.alt = memePath.id;
+    img.time = memeData.time ? memeData.time : "";
+    img.original = !isEdited ? url : "";
+    img.edited = isEdited ? url : ""; 
+    img.topText = memeData.topText ? memeData.topText : "";
+    img.topSize = memeData.topSize ? memeData.topSize : "";
+    img.bottomText = memeData.bottomText ? memeData.bottomText : "";
+    img.bottomSize = memeData.bottomSize ? memeData.bottomSize : "";
+    img.tags = memeData.tags ? memeData.tags : "";
+
+    console.log(img);
+
+    //append to the masonry
+    $grid.append(grid_item).masonry('reloadItems').masonry('layout');
+
+  }).catch(function(error){
+    console.error(error.message);
+    // Handle any errors
+    switch (error.code) 
+    {
+      case 'storage/object-not-found':
+        //add the item to the list 
+        // File doesn't exist
+        break;
+
+      case 'storage/unauthorized':
+        // User doesn't have permission to access the object
+        break;
+
+      case 'storage/canceled':
+        // User canceled the upload
+        break;
+
+      case 'storage/unknown':
+        // Unknown error occurred, inspect the server response
+        break;
+    }
+  });
+}
+
+function populateLibrary(user, storage, database){
+  //the main collection of memes
+  const userMemes = database.collection("users")
+    .doc(user.uid)
+    .collection("memes");
+
+  //pull the references from the database
+  userMemes.get().then(function(memeCollection) 
+    {
+      //pull iterate through the meme collection 
+      for(let i = 0; i < memeCollection.size; i++)
+      {
+        let currentMeme = memeCollection.docs[i];
+
+        //get the data for the current meme
+        userMemes.doc(currentMeme.id).get().then(function(meme)
+          {
+            //this is the meme
+            memeData = meme.data();
+
+            console.log(memeData);
+            if(memeData.edited != null)//use the edited url by default
+            {
+              addMemeToMasonry(storage, true, memeData);
+            }
+            else if(memeData.original != null)//use the original photo as backup
+            {
+              addMemeToMasonry(storage, false, memeData);
+            }
+            else//this should never happen
+            {
+              console.error('database contained no links to images');
+            }
+          });
+      }
     });
-    /*** Firebase ***/
+}
 
+document.addEventListener('DOMContentLoaded', function() {
+  /*** Masonry ***/
+  $grid = $('.grid').masonry({
+    itemSelector: '.grid-item',
+    columnWidth: '.grid-sizer',
+    percentPosition: true,
+    gutter: 4,
+    horizontalOrder: true
+  });
+  /*** End Masonry ***/
 
-    /*** Library stuff ***/
+  /*** Firebase ***/
+  firebase.auth().onAuthStateChanged(function(user) {
+    if(user){
+      //populate their library with memes from their collection
+      const storage = firebase.storage();
+      const database = firebase.firestore();
+      populateLibrary(user, storage, database);
+    }else{
+      //redirect the user to login
+      window.location.assign('auth.html')
+    }
+  });
+  /*** End Firebase ***/
 
-
+  /*** Library stuff ***/
 });

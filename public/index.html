@@ -2,93 +2,101 @@
 
 <html lang="en">
 
-<head>
+  <head>
 
     <title>Gotem</title>
-    <link rel="stylesheet" href="css/index.css">
+
+    <!--Imports Start-->
     <link href="https://fonts.googleapis.com/css?family=Slackey" rel="stylesheet">
-    <script src="https://code.iconify.design/1/1.0.0-rc3/iconify.min.js"></script>
+    <script src="http://code.iconify.design/1/1.0.0-rc3/iconify.min.js"></script>
+    <!--Imports End-->
 
-</head>
+    <!--Firebase Start-->
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-storage.js"></script>
+    <!--Firebase End-->
 
-<body>
+    <!--StyleSheet Start-->
+    <link rel="stylesheet" href="css/index.css">
+    <!--StyleSheet End-->
+
+  </head>
+
+  <body>
 
     <header>
-        <h1>Library</h1>
+      <h1>Library</h1>
 
-        <div>
-            <input name="searchMemesByName" id="search-memes-by-name" type="search" placeholder="Search for Meme">
-        </div>
+      <div>
+        <input name="searchMemesByName" id="search-memes-by-name" type="search" placeholder="Search for Meme">
+      </div>
     </header>
 
     <main>
-        <aside id="tags-container" >
-            <h2>Tags</h2>
-            <hr>
-            <div class="tag">
-                Random
-            </div>
-            <div class="tag">
-                Funny
-            </div>
-            <div class="tag">
-                Happy
-            </div>
-        </aside>
+    <aside id="tags-container" >
+      <h2>Tags</h2>
+      <hr>
+      <div class="tag">
+        Random
+      </div>
+      <div class="tag">
+        Funny
+      </div>
+      <div class="tag">
+        Happy
+      </div>
+    </aside>
 
-        <aside id="filters-container">
-            <h2>Sort By</h2>
-            <hr>
-        </aside>
+    <aside id="filters-container">
+      <h2>Sort By</h2>
+      <hr>
+    </aside>
 
-        <div class="grid">
-
-            <div class="grid-sizer"></div>
-            <div class="grid-item">
-                <img src="img/meme2.jpg" alt="">
-            </div>
-            <div class="grid-item">
-                <div class="grid-item-overlay">
-                    <button onclick="deleteImg(this);">Delete</button>
-                    <button>Share</button>
-                    <button onclick="editImg(this);">Edit</button>
-                </div>
-                <img id="img-to-remove" src="img/meme6.jpg" alt="">
-            </div>
-            <div class="grid-item">
-                <img src="img/meme4.jpg" alt="">
-            </div>
-            <div class="grid-item">
-                <img src="img/meme1.jpg" alt="">
-            </div>
-            <div class="grid-item">
-                <img src="img/meme5.jpg" alt="">
-            </div>
-
-        </div>
+    <div class="grid">
+      <div class="grid-sizer"></div>
+      <!--memes go appended here-->
+    </div>
 
     </main>
 
     <footer>
 
-        <a id="profile-btn" class="floating-btn" href="profile.html">
-            <i class="iconify" data-icon="mdi:account"></i>
-        </a>
-        <a id="discover-btn" class="floating-btn" href="discover.html">
-            <i class="iconify" data-icon="mdi:eye"></i>
-        </a>
-        <a id="create-btn" class="floating-btn" href="create.html">
-            <i class="iconify" data-icon="mdi:pencil"></i>
-        </a>
+      <a id="profile-btn" class="floating-btn" href="profile.html">
+        <i class="iconify" data-icon="mdi:account"></i>
+      </a>
+      <a id="discover-btn" class="floating-btn" href="discover.html">
+        <i class="iconify" data-icon="mdi:eye"></i>
+      </a>
+      <a id="create-btn" class="floating-btn" href="create.html">
+        <i class="iconify" data-icon="mdi:pencil"></i>
+      </a>
 
     </footer>
 
+    <!--Javascript Start-->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="js/masonry.pkgd.min.js"></script>
+    <script src="js/firebase.js"></script>
     <script src="js/index.js"></script>
+    <!--Javascript End-->
 
-</body>
+  </body>
+
+  <div id="templates">
+    <template id="grid-item-template">
+      <div class="grid-item">
+        <div class="grid-item-overlay">
+          <button onclick="deleteImg(this);">Delete</button>
+          <button>Share</button>
+          <button onclick="editImg(this);">Edit</button>
+        </div>
+        <img class="grid-item-image" src="img/default.jpg" alt="">
+      </div>
+    </template>
+  </div>
 
 </html>
