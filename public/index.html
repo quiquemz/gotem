@@ -27,83 +27,40 @@
   <body>
 
     <header>
-        <h1>Library</h1>
+      <h1>Library</h1>
     </header>
 
     <main>
-        <aside id="tags-container" >
-            <h2>Tags</h2>
-            <hr>
-            <div class="tag">
-                Random
-            </div>
-            <div class="tag">
-                Funny
-            </div>
-            <div class="tag">
-                Happy
-            </div>
-        </aside>
+    <aside id="tags-container" >
+      <h2>Tags</h2>
+      <hr>
+      <!--Tags go here-->
+    </aside>
 
-        <aside id="filters-container">
-            <h2>Sort By</h2>
-            <hr>
+    <aside id="filters-container">
+      <h2>Sort By</h2>
+      <hr>
+      <input id="date-radio" type="radio" title="Date" name="sort">Date
+      <input id="name-radio" type="radio" title="radio" name="sort">Name
+    </aside>
 
-            <input id="date-radio" type="radio" title="Date" name="sort">Date
-
-            <input id="name-radio" type="radio" title="radio" name="sort">Name
-        </aside>
-
-        <div class="grid">
-
-            <div class="grid-sizer"></div>
-            <div class="grid-item">
-                <span class="time" hidden>2</span>
-                <span class="name" hidden>a</span>
-                <img src="img/meme2.jpg" alt="">
-            </div>
-            <div class="grid-item">
-                <div class="grid-item-overlay">
-                    <button onclick="deleteImg(this);">Delete</button>
-                    <button>Share</button>
-                    <button onclick="editImg(this);">Edit</button>
-                </div>
-                <span class="time" hidden>1</span>
-                <span class="name" hidden>b</span>
-                <img id="img-to-remove" src="img/meme6.jpg" alt="">
-            </div>
-            <div class="grid-item">
-                <span class="time" hidden>5</span>
-                <span class="name" hidden>t</span>
-                <img src="img/meme4.jpg" alt="">
-            </div>
-            <div class="grid-item">
-                <span class="time" hidden>3</span>
-                <span class="name" hidden>c</span>
-                <img src="img/meme1.jpg" alt="">
-            </div>
-            <div class="grid-item">
-                <span class="time" hidden>4</span>
-                <span class="name" hidden>aa</span>
-                <img src="img/meme5.jpg" alt="">
-            </div>
-
-        </div>
+    <div class="grid">
+      <div class="grid-sizer"></div>
+      <!--Memes go here-->
+    </div>
 
     </main>
 
     <footer>
-
-        <a id="profile-btn" class="floating-btn" href="profile.html">
-            <i class="iconify" data-icon="mdi:account"></i>
-        </a>
-        <a id="discover-btn" class="floating-btn" href="#">
-            <i class="iconify" data-icon="mdi:eye"></i>
-        </a>
-        <a id="create-btn" class="floating-btn" href="create.html">
-            <i class="iconify" data-icon="mdi:pencil"></i>
-        </a>
-
+      <a id="profile-btn" class="floating-btn" href="profile.html">
+        <i class="iconify" data-icon="mdi:account"></i>
+      </a>
+      <a id="discover-btn" class="floating-btn" href="#">
+        <i class="iconify" data-icon="mdi:eye"></i>
+      </a>
+      <a id="create-btn" class="floating-btn" href="create.html">
+        <i class="iconify" data-icon="mdi:pencil"></i>
+      </a>
     </footer>
 
     <!--Javascript Start-->
@@ -126,6 +83,13 @@
           <button onclick="editImg(this);">Edit</button>
         </div>
         <img class="grid-item-image" src="img/default.jpg" alt="">
+        <span class="time" hidden>1</span>
+        <span class="name" hidden>b</span>
+      </div>
+    </template>
+    <template id="tag-template">
+      <div class="tag">
+        Random
       </div>
     </template>
   </div>
