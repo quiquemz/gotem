@@ -45,14 +45,6 @@
 
             <div class="grid-sizer"></div>
             <div class="grid-item">
-                <div class="grid-item-overlay">
-                    <button>Delete</button>
-                    <button>Share</button>
-                    <button>Edit</button>
-                </div>
-                <img src="img/meme1.jpg" alt="">
-            </div>
-            <div class="grid-item">
                 <img src="img/meme2.jpg" alt="">
             </div>
             <div class="grid-item">
@@ -60,6 +52,14 @@
             </div>
             <div class="grid-item">
                 <img src="img/meme4.jpg" alt="">
+            </div>
+            <div class="grid-item">
+                <div class="grid-item-overlay">
+                    <button onclick="deleteImg(this);">Delete</button>
+                    <button>Share</button>
+                    <button>Edit</button>
+                </div>
+                <img src="img/meme1.jpg" alt="">
             </div>
             <div class="grid-item">
                 <img src="img/meme5.jpg" alt="">
@@ -82,22 +82,8 @@
         </a>
     </footer>
 
-
     <script src="js/masonry.pkgd.min.js"></script>
-    <script>
-        // init Masonry
-        var grid = document.querySelector('.grid');
-
-        var msnry = new Masonry( grid, {
-            itemSelector: '.grid-item',
-            columnWidth: '.grid-sizer',
-            percentPosition: true,
-            gutter: 4,
-            horizontalOrder: true
-        });
-
-
-    </script>
+    <script src="js/index.js"></script>
 
 </body>
 

@@ -151,6 +151,33 @@ a {
     background: black;
 }
 
+#tag-input-container {
+    display: flex;
+}
+
+#tag-input-container > input {
+    margin-bottom: 0;
+    margin-right: 8px;
+}
+
+#tag-input-container > button {
+    padding: 0 10px;
+    font-size: 12px;
+}
+
+#tags-container {
+    margin-top: 4px;
+}
+
+.tag {
+    background-color: var(--main-white);
+    color: var(--main-blue);
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin: 4px 4px;
+    font-size: 12px;
+}
+
 
 
 

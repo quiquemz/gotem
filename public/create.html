@@ -18,11 +18,10 @@
         </a>
         <h1>Create</h1>
         <div class="hdr-btn">
-            <i class="iconify" data-icon="mdi:mail" data-inline="false"></i>
             <a id="download-btn" href="" download="myMeme.jpg">
                 <i class="iconify" data-icon="mdi:download" data-inline="false"></i>
             </a>
-            <a href="">
+            <a id="copy-link-btn" href="">
                 <i class="iconify" data-icon="mdi:link-variant" data-inline="false"></i>
             </a>
         </div>
@@ -74,9 +73,23 @@
                 <input id="url-input" type="url" placeholder="www.example.com">
 
                 <input id="file-input" type="file" accept="image/*">
+
+                <div class="options-header" style="margin-top: 8px">
+                    <i class="iconify" data-icon="mdi:tag" data-inline="false"></i>
+                    <h3>Add Tags</h3>
+                </div>
+
+                <label for="tag-input">Tag</label>
+                <div id="tag-input-container">
+                    <input id="tag-input" type="text" placeholder="Add Some Fun Tag(s)">
+                    <button id="add-tag-btn">Add</button>
+                </div>
+
+                <div id="tags-container"></div>
+
             </div>
 
-            <button id="save-meme-btn">Save Meme</button>
+            <button id="save-to-library-btn">Save to Library</button>
         </aside>
 
     </main>
