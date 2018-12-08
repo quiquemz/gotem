@@ -1,37 +1,39 @@
 let $grid = null;
 
 const deleteImg = function(e) {
-    const container = e.parentElement.parentElement;
+  const container = e.parentElement.parentElement;
 
-    if($grid) {
-        // TODO try to delete from db
+  if($grid) {
+    // TODO try to delete from db
 
-        // While response from db, show loading overlay?
+    // While response from db, show loading overlay?
+      // if successful delete from db
+      $grid.isotope('remove', container).isotope('layout');
 
-        // if successful delete from db
-        $grid.isotope('remove', container).isotope('layout');
-
-        // if NOT successful
-        // alert('Could not delete ');
-    }
+    // if NOT successful
+    // alert('Could not delete ');
+  }
 };
 
 const editImg = function(e) {
-    const container = e.parentElement.parentElement;
-    const img = container.getElementsByTagName("img")[0];
-    const imgObj = {
-        time: img.time || Date.now(),
-        original: img.original || 'https://imgflip.com/s/meme/The-Most-Interesting-Man-In-The-World.jpg',
-        edited: img.edited || '',
-        topText: img.topText || 'Top Text',
-        topSize: img.topSize || 40,
-        bottomText: img.bottomText || 'Bottom Tet',
-        bottomSize: img.bottomSize || 40,
-        tags: img.tags || []
-    };
+  const container = e.parentElement.parentElement;
+  const img = container.getElementsByTagName("img")[0];
+  console.log('editing image:');
+  console.log(img);
+  const imgObj = {
+    time: img.time,
+    original: img.original, 
+    edited: img.edited, 
+    topText: img.topText, 
+    topSize: img.topSize, 
+    bottomText: img.bottomText, 
+    bottomSize: img.bottomSize, 
+    tags: img.tags
+  };
 
-    localStorage.setItem('currentImg', JSON.stringify(imgObj));
-    window.location.assign('/create.html');
+  console.log(imgObj);
+  localStorage.setItem('currentImg', JSON.stringify(imgObj));
+  window.location.assign('/create.html');
 };
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -50,8 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
             time: '.time parseInt'
         }
     });
-    /*** Firebase ***/
-
 
     /*** Library stuff ***/
     document.getElementById('date-radio').onclick = function() {
@@ -62,4 +62,19 @@ document.addEventListener('DOMContentLoaded', function() {
         $grid.isotope({sortBy: 'name'});
     };
 
+  /*** Firebase ***/
+  firebase.auth().onAuthStateChanged(function(user) {
+    if(user){
+      //populate their library with memes from their collection
+      const storage = firebase.storage();
+      const database = firebase.firestore();
+      /*populateLibrary(user, storage, database);*/
+    }else{
+      //redirect the user to login
+      window.location.assign('auth.html')
+    }
+  });
+  /*** End Firebase ***/
+
+  /*** Library stuff ***/
 });
