@@ -115,12 +115,6 @@ input[type="search"] {
     font-size: 14px;
 }
 
-.tag:hover {
-    background: var(--main-grey);
-    transform: scale(1.02);
-    cursor: pointer;
-}
-
 .grid {
     margin: 4px 268px;
 }

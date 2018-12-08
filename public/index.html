@@ -35,12 +35,18 @@
         <aside id="filters-container">
             <h2>Sort By</h2>
             <hr>
+
+            <input id="date-radio" type="radio" title="Date" name="sort">Date
+
+            <input id="name-radio" type="radio" title="radio" name="sort">Name
         </aside>
 
         <div class="grid">
 
             <div class="grid-sizer"></div>
             <div class="grid-item">
+                <span class="time" hidden>2</span>
+                <span class="name" hidden>a</span>
                 <img src="img/meme2.jpg" alt="">
             </div>
             <div class="grid-item">
@@ -49,15 +55,23 @@
                     <button>Share</button>
                     <button onclick="editImg(this);">Edit</button>
                 </div>
+                <span class="time" hidden>1</span>
+                <span class="name" hidden>b</span>
                 <img id="img-to-remove" src="img/meme6.jpg" alt="">
             </div>
             <div class="grid-item">
+                <span class="time" hidden>5</span>
+                <span class="name" hidden>t</span>
                 <img src="img/meme4.jpg" alt="">
             </div>
             <div class="grid-item">
+                <span class="time" hidden>3</span>
+                <span class="name" hidden>c</span>
                 <img src="img/meme1.jpg" alt="">
             </div>
             <div class="grid-item">
+                <span class="time" hidden>4</span>
+                <span class="name" hidden>aa</span>
                 <img src="img/meme5.jpg" alt="">
             </div>
 
@@ -70,7 +84,7 @@
         <a id="profile-btn" class="floating-btn" href="profile.html">
             <i class="iconify" data-icon="mdi:account"></i>
         </a>
-        <a id="discover-btn" class="floating-btn" href="discover.html">
+        <a id="discover-btn" class="floating-btn" href="#">
             <i class="iconify" data-icon="mdi:eye"></i>
         </a>
         <a id="create-btn" class="floating-btn" href="create.html">
@@ -82,7 +96,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
-    <script src="js/masonry.pkgd.min.js"></script>
+    <script src="js/istope.pkgd.min.js"></script>
     <script src="js/index.js"></script>
 
 </body>

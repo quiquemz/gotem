@@ -9,7 +9,7 @@ const deleteImg = function(e) {
         // While response from db, show loading overlay?
 
         // if successful delete from db
-        $grid.masonry('remove', container).masonry('layout');
+        $grid.isotope('remove', container).isotope('layout');
 
         // if NOT successful
         // alert('Could not delete ');
@@ -37,16 +37,29 @@ const editImg = function(e) {
 document.addEventListener('DOMContentLoaded', function() {
 
     /*** Masonry ***/
-    $grid = $('.grid').masonry({
+    $grid = $('.grid').isotope({
         itemSelector: '.grid-item',
-        columnWidth: '.grid-sizer',
         percentPosition: true,
-        gutter: 4,
-        horizontalOrder: true
+        masonry: {
+            columnWidth: '.grid-sizer',
+            horizontalOrder: true,
+            gutter: 4
+        },
+        getSortData: {
+            name: '.name',
+            time: '.time parseInt'
+        }
     });
     /*** Firebase ***/
 
 
     /*** Library stuff ***/
+    document.getElementById('date-radio').onclick = function() {
+        $grid.isotope({sortBy: 'time'});
+    };
+
+    document.getElementById('name-radio').onclick = function() {
+        $grid.isotope({sortBy: 'name'});
+    };
 
 });
