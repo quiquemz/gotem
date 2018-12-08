@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /*** HTML elements ***/
     const memeCard = document.getElementById('meme-card');
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext("2d");
+    let canvas = document.createElement('canvas');
+    let ctx = canvas.getContext("2d");
     const img = document.createElement('img');
     const topText = document.getElementById('top-text-input');
     const topSizer = document.getElementById('top-text-size');
@@ -40,18 +40,20 @@ document.addEventListener('DOMContentLoaded', function() {
         topSizer.labels[0].childNodes[1].innerText = topSizeVal;
         bottomSizer.labels[0].childNodes[1].innerText = bottomSizeVal;
 
-        currentImgObj.tags.forEach(function(tag) {
-            createTagElmt(tag);
-        });
+        currentImgObj.tags.forEach(tag => createTagElmt(tag));
 
-        drawMemeOnCanvas();
+        localStorage.setItem('currentImg', JSON.stringify(currentImgObj));
     }
 
     function drawMemeOnCanvas() {
 
         // Canvas Part
         if(memeCard.hasChildNodes()) {
-            memeCard.removeChild(canvas);
+            try{
+                memeCard.removeChild(canvas);
+            } catch (e) {
+                console.warn(e);
+            }
         }
 
         memeCard.appendChild(img);
@@ -59,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.height = img.height;
         canvas.width = img.width;
 
+        ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
         memeCard.removeChild(img);
@@ -126,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createTagElmt(text) {
-        const tagEl = `<span class="tag">${text}</span>`;
+        const tagElmt = `<span class="tag">${text}</span>`;
 
         if(!text)
             return;
@@ -136,17 +139,48 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        tagsContainer.insertAdjacentHTML('beforeend', tagEl);
+        tagsContainer.insertAdjacentHTML('beforeend', tagElmt);
 
         // TODO add tag to DB, or properties of Meme
-        // NOTE: Make sure to add only if doens't exist
+        // NOTE: Make sure to add only if doesn't exist
+    }
+
+    function updateLocalStorage() {
+        let currentImg = JSON.parse(localStorage.getItem('currentImg'));
+
+        if(!currentImg) {
+            initializeHTML({
+                time: Date.now(),
+                original: img.src,
+                edited: '',
+                topText: topText.value,
+                topSize: topSizer.value,
+                bottomText: bottomText.value,
+                bottomSize: bottomSizer.value,
+                tags: Array.from(tagsContainer.children).map((e) => e.innerText)
+            });
+
+            currentImg = JSON.parse(localStorage.getItem('currentImg'));
+        }
+
+        currentImg.topText = topText.value;
+        currentImg.topSize = topSizer.value;
+        currentImg.bottomText = bottomText.value;
+        currentImg.bottomSize = bottomSizer.value;
+
+        currentImg.tags = Array.from(tagsContainer.children).map((e) => e.innerText);
+
+        currentImg.original = img.src;
+        currentImg.time = Date.now();
+
+        localStorage.setItem('currentImg', JSON.stringify(currentImg));
     }
 
     /*** Initializing app ***/
     if(localStorage.getItem('currentImg')) {
         initializeHTML(JSON.parse(localStorage.getItem('currentImg')));
     } else {
-        const imgObj = {
+        initializeHTML({
             time: Date.now(),
             original: 'https://imgflip.com/s/meme/The-Most-Interesting-Man-In-The-World.jpg',
             edited: '',
@@ -155,26 +189,22 @@ document.addEventListener('DOMContentLoaded', function() {
             bottomText: 'Bottom Tet',
             bottomSize: 40,
             tags: []
-        };
-
-        initializeHTML(imgObj);
+        });
     }
 
     /*** Event Handlers ***/
     // Draw image on load
     img.onload = function() {
+        console.log('test');
         drawMemeOnCanvas();
+        updateLocalStorage();
     };
 
     // Draw image on top text input change
     topText.oninput = function() {
         topTextVal = topText.value.toUpperCase();
         drawMemeOnCanvas();
-    };
-
-    topText.onchange = function() {
-        topTextVal = topText.value.toUpperCase();
-        drawMemeOnCanvas();
+        updateLocalStorage();
     };
 
     // Draw image on top text input change
@@ -182,23 +212,14 @@ document.addEventListener('DOMContentLoaded', function() {
         topSizeVal = topSizer.value;
         topSizer.labels[0].childNodes[1].innerText = topSizeVal;
         drawMemeOnCanvas();
-    };
-
-    topSizer.onchange = function() {
-        topSizeVal = topSizer.value;
-        topSizer.labels[0].childNodes[1].innerText = topSizeVal;
-        drawMemeOnCanvas();
+        updateLocalStorage();
     };
 
     // Draw image on bottom text input change
     bottomText.oninput = function() {
         bottomTextVal = bottomText.value.toUpperCase();
         drawMemeOnCanvas();
-    };
-
-    bottomText.onchange = function() {
-        bottomTextVal = bottomText.value.toUpperCase();
-        drawMemeOnCanvas();
+        updateLocalStorage();
     };
 
     // Draw image on bottom text input change
@@ -206,27 +227,26 @@ document.addEventListener('DOMContentLoaded', function() {
         bottomSizeVal = bottomSizer.value;
         bottomSizer.labels[0].childNodes[1].innerText = bottomSizeVal;
         drawMemeOnCanvas();
-    };
-
-    bottomSizer.onchange = function() {
-        bottomSizeVal = bottomSizer.value;
-        bottomSizer.labels[0].childNodes[1].innerText = bottomSizeVal;
-        drawMemeOnCanvas();
+        updateLocalStorage();
     };
 
     // Draw image on url input change
     urlInput.oninput = function() {
         img.src = urlInput.value;
+        img.crossOrigin = 'Anonymous';
+        fileInput.value = '';
     };
 
     // Draw image on file upload
     fileInput.onchange = function(e) {
+        img.crossOrigin = null;
         const file = e.target.files[0];
 
-        if(!file)
-            return;
+        if(!file) return;
 
         img.src = URL.createObjectURL(file);
+        urlInput.value = '';
+
     };
 
     // Draw image on window resize
@@ -238,22 +258,42 @@ document.addEventListener('DOMContentLoaded', function() {
     copyLinkAnchor.onclick = function(e) {
         e.preventDefault();
 
-        let flattenImgLocalUrl = canvas.toDataURL('image/jpg');
+        let flattenedLocalImgUrl = '';
+
+        try {
+            flattenedLocalImgUrl = canvas.toDataURL('image/png');
+        } catch (e) {
+            console.log(img.crossOrigin);
+        }
+
         // TODO Copy public link, NOT local
-        copyTextToClipboard(flattenImgLocalUrl);
+        copyTextToClipboard(flattenedLocalImgUrl);
     };
 
     // Download meme
     downloadMemeAnchor.onclick = function() {
-        const flattenLocalUrl = canvas.toDataURL('image/jpg');
+        let flattenedLocalImgUrl = '';
+
+        try {
+            flattenedLocalImgUrl = canvas.toDataURL('image/png');
+        } catch (e) {
+            alert('Image cannot be downloaded');
+            return;
+        }
 
         // TODO create downloadable link
-        this.href = flattenLocalUrl;
+        this.href = flattenedLocalImgUrl;
     };
 
     // Save meme to library
     saveToLibraryBtn.onclick = function() {
-        const flattenLocalUrl = canvas.toDataURL('image/jpg');
+        let flattenedLocalImgUrl = '';
+
+        try {
+            flattenedLocalImgUrl = canvas.toDataURL('image/png');
+        } catch (e) {
+            alert('Image cannot be saved');
+        }
 
         /*
         * TODO Save to DB:
@@ -262,6 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
         * 3. top fields (text, size)
         * 4. bottom fields (text, size)
         * 5. Tags (both to set and object)
+        * 6. updateLocalStorage();
         * */
 
     };
@@ -270,6 +311,8 @@ document.addEventListener('DOMContentLoaded', function() {
     addTagBtn.onclick = function() {
         createTagElmt(tagInput.value);
         tagInput.value = '';
+
+        updateLocalStorage();
     };
 
 });
