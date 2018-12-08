@@ -48,17 +48,20 @@
                 <img src="img/meme2.jpg" alt="">
             </div>
             <div class="grid-item">
+                <div class="grid-item-overlay">
+                    <button onclick="deleteImg(this);">Delete</button>
+                    <button>Share</button>
+                    <button onclick="editImg(this);">Edit</button>
+                </div>
+                <img id="img-to-remove" src="img/meme6.jpg" alt="">
+            </div>
+            <div class="grid-item">
                 <img src="img/meme3.jpg" alt="">
             </div>
             <div class="grid-item">
                 <img src="img/meme4.jpg" alt="">
             </div>
             <div class="grid-item">
-                <div class="grid-item-overlay">
-                    <button onclick="deleteImg(this);">Delete</button>
-                    <button>Share</button>
-                    <button>Edit</button>
-                </div>
                 <img src="img/meme1.jpg" alt="">
             </div>
             <div class="grid-item">
@@ -80,6 +83,7 @@
         <a id="create-btn" class="floating-btn" href="create.html">
             <i class="iconify" data-icon="mdi:pencil"></i>
         </a>
+
     </footer>
 
     <script src="js/masonry.pkgd.min.js"></script>
