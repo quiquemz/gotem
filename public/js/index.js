@@ -1,16 +1,15 @@
-let msnry = null;
+let $grid = null;
 
 const deleteImg = function(e) {
     const container = e.parentElement.parentElement;
 
-    if(msnry) {
+    if($grid) {
         // TODO try to delete from db
 
         // While response from db, show loading overlay?
 
         // if successful delete from db
-        container.parentElement.removeChild(container);
-        msnry.layout();
+        $grid.masonry('remove', container).masonry();
 
         // if NOT successful
         // alert('Could not delete ');
@@ -38,31 +37,17 @@ const editImg = function(e) {
 document.addEventListener('DOMContentLoaded', function() {
 
     /*** Masonry ***/
-    const grid = document.querySelector('.grid');
-
-    msnry = new Masonry(grid, {
+    $grid = $('.grid').masonry({
         itemSelector: '.grid-item',
         columnWidth: '.grid-sizer',
         percentPosition: true,
         gutter: 4,
         horizontalOrder: true
     });
-    msnry.layout();
-
     /*** Firebase ***/
 
 
     /*** Library stuff ***/
-    //TODO delete imgToRemove stuff
-    const imgToRemove = document.getElementById('img-to-remove');
 
-    imgToRemove.time = Date.now();
-    imgToRemove.original = imgToRemove.src;
-    imgToRemove.edited = imgToRemove.src;
-    imgToRemove.topText = "the face you make";
-    imgToRemove.topSize = 30;
-    imgToRemove.bottomText = "when you fall on a hole";
-    imgToRemove.bottomSize = 30;
-    imgToRemove.tags = ["fun", "english", "random"];
 
 });
