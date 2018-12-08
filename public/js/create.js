@@ -195,7 +195,6 @@ document.addEventListener('DOMContentLoaded', function() {
     /*** Event Handlers ***/
     // Draw image on load
     img.onload = function() {
-        console.log('test');
         drawMemeOnCanvas();
         updateLocalStorage();
     };

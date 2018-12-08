@@ -18,11 +18,10 @@ const deleteImg = function(e) {
 const editImg = function(e) {
   const container = e.parentElement.parentElement;
   const img = container.getElementsByTagName("img")[0];
-  console.log('editing image:');
-  console.log(img);
+
   const imgObj = {
     time: img.time,
-    original: img.original, 
+    original: img.original,
     edited: img.edited, 
     topText: img.topText, 
     topSize: img.topSize, 
@@ -31,7 +30,6 @@ const editImg = function(e) {
     tags: img.tags
   };
 
-  console.log(imgObj);
   localStorage.setItem('currentImg', JSON.stringify(imgObj));
   window.location.assign('/create.html');
 };
